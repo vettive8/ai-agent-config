@@ -26,8 +26,7 @@ ai-agent-config/
     skills/            <- 6 custom Codex skills
   claude/
     settings.json      <- Claude Code settings (theme + finish-sound hook)
-    skills/
-      app-test/        <- 1 Claude skill
+    skills/            <- 7 skills (app-test + the 6 ported from Codex)
 ```
 
 ---
@@ -59,11 +58,12 @@ ai-agent-config/
 
 Each Codex skill folder = `SKILL.md` + `agents/openai.yaml` (Codex-specific).
 
-### Claude Code — 1 skill
+### Claude Code — 7 skills
 
 | Skill | What it does |
 |---|---|
 | `app-test` | Launches a web app, opens it in a real visible browser (Playwright), runs the app's own `tests/smoke.mjs`, screenshots every step, prints pass/fail. Universal runner — works for any app. |
+| 6 ported from Codex | `agentic-dev-loop`, `live-browser-observer`, `livefix-extension`, `growth-strategist`, `creative-performance-lab`, `copywriter-campaigns` — see the Codex table above; descriptions were made agent-neutral. |
 
 > `app-test` needs Playwright. After deploy: `cd ~/.claude/skills/app-test && npm install`.
 
@@ -78,21 +78,17 @@ they are part of the tool itself.
   `claude-api`, `init`, `review`, `security-review`, `keybindings-help`,
   `fewer-permission-prompts`
 
-### The difference — what "maximize" means
+### Skill parity — status
 
 | | Codex | Claude Code |
 |---|---|---|
-| Custom skills | **6** | **1** (`app-test`) |
-| Missing vs. the other | `app-test` | all **6** Codex skills |
+| Custom skills | **6** | **7** (the 6 + `app-test`) |
+| Still missing | `app-test` | — |
 
-To reach parity:
-
-1. Copy the 6 Codex skills into Claude Code. `SKILL.md` is the same format;
-   the extra `agents/openai.yaml` is harmless (Claude ignores it).
-2. Edit each skill's description — they currently say *"Use when Codex is
-   asked to..."*. Make the wording agent-neutral so it triggers in Claude too.
-3. Optionally add `app-test` to Codex (needs an `agents/openai.yaml`).
-4. Test: launch each agent and confirm the new skills are listed.
+The 6 Codex skills are now ported into Claude Code with agent-neutral
+descriptions (the Codex-only `agents/openai.yaml` was dropped from the Claude
+copies). The one remaining gap: `app-test` is not yet in Codex — adding it
+there needs an `agents/openai.yaml` wrapper.
 
 ---
 
@@ -144,13 +140,10 @@ Never in this repo — `.gitignore` blocks them as a safety net:
 
 ## Parity status & next steps
 
-Current state — **Codex is richer than Claude Code:**
-
 - ✅ Finish sound — both agents (unified script).
 - ✅ Shared instructions — both agents get `instructions.md`.
-- ⬜ **Skills not yet at parity:** Codex has 6, Claude has 1. The 6 Codex
-  `SKILL.md` files work in Claude as-is — copying them into `claude/skills/`
-  is the next move toward full parity.
-- ⬜ `app-test` could also be added to Codex (add an `agents/openai.yaml`).
+- ✅ **Skills — the 6 Codex skills are ported into Claude Code** with neutral
+  wording. Claude now has 7, Codex has 6.
+- ⬜ Add `app-test` to Codex (needs an `agents/openai.yaml`) for 100% parity.
 - ⬜ A shared, machine-independent command allowlist (clean replacement for
   Codex's `rules/default.rules`).

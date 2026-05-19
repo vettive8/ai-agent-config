@@ -1,0 +1,4 @@
+interface:
+  display_name: "Growth Strategist"
+  short_description: "Plan offers, funnels, and channel strategy"
+  default_prompt: "Use $growth-strategist to design a weekly campaign strategy."

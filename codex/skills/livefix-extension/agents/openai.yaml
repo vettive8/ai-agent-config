@@ -1,0 +1,4 @@
+interface:
+  display_name: "LiveFix Extension Loop"
+  short_description: "Run Playwright autofix loops for extensions"
+  default_prompt: "Use $livefix-extension to scaffold extension tests and run the LiveFix loop in this repo."

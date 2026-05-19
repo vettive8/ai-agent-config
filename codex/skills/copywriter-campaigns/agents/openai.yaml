@@ -1,0 +1,4 @@
+interface:
+  display_name: "Campaign Copywriter"
+  short_description: "Write conversion-focused ads, emails, and pages"
+  default_prompt: "Use $copywriter-campaigns to write campaign copy from a brief."

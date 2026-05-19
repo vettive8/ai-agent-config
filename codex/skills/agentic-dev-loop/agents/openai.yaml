@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Dev Loop"
+  short_description: "Help with Agentic Dev Loop tasks"
+  default_prompt: "Execute this task end-to-end: infer safe defaults, implement changes, run repository checks, and provide a concise handoff with blockers and risks."

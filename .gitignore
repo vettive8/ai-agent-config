@@ -1,0 +1,31 @@
+# ============================================================
+#  SECRETS -- never commit. These hold login tokens.
+# ============================================================
+**/auth.json
+**/.credentials.json
+*.key
+*.pem
+.env
+.env.*
+
+# ============================================================
+#  Machine state / runtime -- not portable, not useful to share.
+# ============================================================
+notify.log
+notify_last_sound.txt
+**/sessions/
+**/archived_sessions/
+**/cache/
+**/logs/
+*.sqlite
+*.sqlite-*
+**/file-history/
+**/shell-snapshots/
+**/projects/
+installation_id
+cap_sid
+
+# ============================================================
+#  Skill dependencies -- reinstalled with `npm install`.
+# ============================================================
+**/node_modules/

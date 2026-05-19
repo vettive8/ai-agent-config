@@ -1,0 +1,4 @@
+interface:
+  display_name: "Creative Performance Lab"
+  short_description: "Build creative tests, hooks, and KPI review plans"
+  default_prompt: "Use $creative-performance-lab to build a creative test matrix."

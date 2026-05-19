@@ -1,0 +1,4 @@
+interface:
+  display_name: "Live Browser Observer"
+  short_description: "Run live Playwright browser sessions with logs."
+  default_prompt: "Run headed Playwright, stream step logs, and save artifacts for this app."

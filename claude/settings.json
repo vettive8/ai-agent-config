@@ -1,0 +1,19 @@
+{
+  "autoUpdatesChannel": "latest",
+  "theme": "dark",
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\Users\\ASUS\\.claude\\notify.ps1"],
+            "async": true,
+            "statusMessage": "Playing finish sound"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -67,6 +67,33 @@ Each Codex skill folder = `SKILL.md` + `agents/openai.yaml` (Codex-specific).
 
 > `app-test` needs Playwright. After deploy: `cd ~/.claude/skills/app-test && npm install`.
 
+### Built-in skills (ship with each tool — not portable, listed for reference)
+
+Each agent comes with its own built-ins. These are **not** a gap to close —
+they are part of the tool itself.
+
+- **Codex** (`skills/.system/`): `imagegen`, `openai-docs`, `plugin-creator`,
+  `skill-creator`, `skill-installer`
+- **Claude Code**: `update-config`, `simplify`, `loop`, `schedule`,
+  `claude-api`, `init`, `review`, `security-review`, `keybindings-help`,
+  `fewer-permission-prompts`
+
+### The difference — what "maximize" means
+
+| | Codex | Claude Code |
+|---|---|---|
+| Custom skills | **6** | **1** (`app-test`) |
+| Missing vs. the other | `app-test` | all **6** Codex skills |
+
+To reach parity:
+
+1. Copy the 6 Codex skills into Claude Code. `SKILL.md` is the same format;
+   the extra `agents/openai.yaml` is harmless (Claude ignores it).
+2. Edit each skill's description — they currently say *"Use when Codex is
+   asked to..."*. Make the wording agent-neutral so it triggers in Claude too.
+3. Optionally add `app-test` to Codex (needs an `agents/openai.yaml`).
+4. Test: launch each agent and confirm the new skills are listed.
+
 ---
 
 ## What is and isn't cross-agent portable

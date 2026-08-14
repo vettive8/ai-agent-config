@@ -13,6 +13,18 @@
             "statusMessage": "Playing finish sound"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell.exe",
+            "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "C:\\Users\\ASUS\\.claude\\git-autosave.ps1"],
+            "async": true,
+            "timeout": 30,
+            "statusMessage": "Auto-saving to git"
+          }
+        ]
       }
     ]
   }

@@ -21,6 +21,7 @@ ai-agent-config/
   shared/
     instructions.md    <- deployed as both AGENTS.md and CLAUDE.md
     notify.ps1         <- the finish-sound script, used by both agents
+    git-autosave.ps1   <- auto-commit+push script, used by both agents
   codex/
     config.toml        <- Codex settings (trimmed: no machine paths)
     skills/            <- 6 custom Codex skills
@@ -39,6 +40,7 @@ ai-agent-config/
 | Global instructions | `~/.codex/AGENTS.md` | `~/.claude/CLAUDE.md` |
 | Skills folder | `~/.codex/skills/` | `~/.claude/skills/` |
 | Finish sound | `notify` array in config.toml | `Stop` hook in settings.json |
+| Git auto-save | run manually via `shared/instructions.md` (no hook primitive) | `Stop` hook in settings.json (automatic) |
 | Model | `gpt-5.5`, reasoning effort `xhigh` | set in-app |
 
 ---
@@ -78,6 +80,26 @@ they are part of the tool itself.
   `claude-api`, `init`, `review`, `security-review`, `keybindings-help`,
   `fewer-permission-prompts`
 
+### Git auto-save
+
+`shared/git-autosave.ps1` commits + pushes whatever changed in the current
+project after real work happens -- "go back in time" recoverability, even
+for incomplete changes. Rules, by design:
+
+- Only acts inside an *existing* git repo. Never auto-runs `git init` in an
+  arbitrary folder -- that stays a deliberate, visible action.
+- Never stages secret-pattern files (`.env`, `*.pem`, `id_rsa`,
+  `*credentials*.json`, etc.) even if they aren't gitignored yet.
+- Creates a GitHub remote only if none exists and `gh` is authenticated --
+  **always private**. Public is a separate, explicit decision, never
+  automatic.
+- Never throws -- failures are reported, never block the session.
+
+Claude Code runs it automatically (the `Stop` hook in `claude/settings.json`
+fires once per turn). Codex has no equivalent hook primitive, so it's
+invoked via an instruction in `shared/instructions.md` instead -- see that
+file for the exact wording.
+
 ### Skill parity — status
 
 | | Codex | Claude Code |
@@ -99,6 +121,7 @@ there needs an `agents/openai.yaml` wrapper.
 | **Skills** (`SKILL.md`) | ✅ Yes | Same format in both. Codex adds an optional `agents/openai.yaml`; Claude ignores it. |
 | **Global instructions** | ✅ Yes | One `shared/instructions.md` → written to `AGENTS.md` *and* `CLAUDE.md`. |
 | **Finish-sound script** | ✅ Yes | One `shared/notify.ps1`; keys its state off `$PSScriptRoot` so it runs from either folder. |
+| **Git auto-save script** | ✅ Yes (logic) | One `shared/git-autosave.ps1`, callable from any shell. **Wiring differs**: Claude fires it automatically via a `Stop` hook; Codex has no hook primitive, so it's an instruction in `shared/instructions.md` telling the agent to run it after real work. |
 | **Settings file** | ⚠️ Concept only | TOML vs JSON — the *ideas* map (model, sound), the files don't. |
 | **Sound wiring** | ⚠️ Per-agent | Codex `notify =` array vs Claude `Stop` hook. |
 | **Auto-approvals** | ❌ No | Codex `rules/*.rules` vs Claude `permissions` — different models. |

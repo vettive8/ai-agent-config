@@ -33,6 +33,14 @@ Copy-Item "$repo\shared\notify.ps1" (Join-Path $codexDir  "notify.ps1") -Force
 Copy-Item "$repo\shared\notify.ps1" (Join-Path $claudeDir "notify.ps1") -Force
 Write-Host "[ok] notify.ps1 -> Codex + Claude" -ForegroundColor Green
 
+# 1b. git-autosave script -> both agents. Claude wires it as a Stop hook
+# automatically (see claude/settings.json below); Codex has no equivalent
+# hook primitive, so it's invoked via the shared instructions instead --
+# see shared/instructions.md.
+Copy-Item "$repo\shared\git-autosave.ps1" (Join-Path $codexDir  "git-autosave.ps1") -Force
+Copy-Item "$repo\shared\git-autosave.ps1" (Join-Path $claudeDir "git-autosave.ps1") -Force
+Write-Host "[ok] git-autosave.ps1 -> Codex + Claude" -ForegroundColor Green
+
 # 2. Shared instructions -> AGENTS.md (Codex) and CLAUDE.md (Claude).
 Backup-IfExists "$codexDir\AGENTS.md"
 Backup-IfExists "$claudeDir\CLAUDE.md"
